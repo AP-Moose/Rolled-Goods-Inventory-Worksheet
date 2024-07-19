@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rolled Goods Calculator</title>
+    <title>Simplified Rolled Goods Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,7 +94,7 @@
 </head>
 <body>
     <div class="calculator">
-        <h1>Rolled Goods Calculator</h1>
+        <h1>Simplified Rolled Goods Calculator</h1>
         <div class="toggle-container">
             <button id="toggleLNFT" class="toggle-btn active">LN FT</button>
             <button id="toggleSQYD" class="toggle-btn">SQ YD</button>
@@ -109,42 +109,17 @@
             </div>
             
             <div class="row">
-                <div class="label">Plus the diameter of the tube</div>
+                <div class="label">The diameter of the tube</div>
                 <div class="input"><input type="number" id="tube" placeholder="inches" step="0.01"></div>
             </div>
             
             <div class="row">
-                <div class="label">Equals</div>
-                <div class="input result" id="totalDiameter">inches</div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Multiplied by the number of rings</div>
+                <div class="label">Number of rings</div>
                 <div class="input"><input type="number" id="rings" placeholder="# Rings"></div>
             </div>
             
             <div class="row">
-                <div class="label">Equals</div>
-                <div class="input result" id="multipliedResult"></div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Multiplied times .0872</div>
-                <div class="input">.0872</div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Equals Total</div>
-                <div class="input result" id="total"></div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Divide Total by .665</div>
-                <div class="input">.665</div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Equals Linear Feet</div>
+                <div class="label">Linear Feet</div>
                 <div class="input result" id="linearFeet"># Linear Feet</div>
             </div>
         </div>
@@ -158,23 +133,13 @@
             </div>
             
             <div class="row">
-                <div class="label">Plus the diameter of the tube</div>
+                <div class="label">The diameter of the tube</div>
                 <div class="input"><input type="number" id="tubeSQ" placeholder="inches" step="0.01"></div>
             </div>
             
             <div class="row">
-                <div class="label">Equals</div>
-                <div class="input result" id="totalDiameterSQ">inches</div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Multiplied by the number of rings</div>
+                <div class="label">Number of rings</div>
                 <div class="input"><input type="number" id="ringsSQ" placeholder="# Rings"></div>
-            </div>
-            
-            <div class="row">
-                <div class="label">Equals</div>
-                <div class="input result" id="multipliedResultSQ"></div>
             </div>
             
             <div class="row">
@@ -190,7 +155,7 @@
             </div>
             
             <div class="row">
-                <div class="label">Equals</div>
+                <div class="label">Square Yards</div>
                 <div class="input result" id="squareYards">Sq. Yds.</div>
             </div>
         </div>
@@ -220,21 +185,12 @@
         const entireRoll = document.getElementById('entireRoll');
         const tube = document.getElementById('tube');
         const rings = document.getElementById('rings');
-        const totalDiameter = document.getElementById('totalDiameter');
-        const multipliedResult = document.getElementById('multipliedResult');
-        const total = document.getElementById('total');
         const linearFeet = document.getElementById('linearFeet');
 
         function calculateLNFT() {
             const diameter = (parseFloat(entireRoll.value) || 0) + (parseFloat(tube.value) || 0);
-            totalDiameter.textContent = diameter.toFixed(2) + ' inches';
-
             const multiplied = diameter * (parseFloat(rings.value) || 0);
-            multipliedResult.textContent = multiplied.toFixed(4);
-
             const totalValue = multiplied * 0.0872;
-            total.textContent = totalValue.toFixed(4);
-
             const feet = totalValue / 0.665;
             linearFeet.textContent = feet.toFixed(2) + ' Linear Feet';
         }
@@ -247,17 +203,12 @@
         const entireRollSQ = document.getElementById('entireRollSQ');
         const tubeSQ = document.getElementById('tubeSQ');
         const ringsSQ = document.getElementById('ringsSQ');
-        const totalDiameterSQ = document.getElementById('totalDiameterSQ');
-        const multipliedResultSQ = document.getElementById('multipliedResultSQ');
         const squareYards = document.getElementById('squareYards');
         const rollWidthRadios = document.getElementsByName('rollWidth');
 
         function calculateSQYD() {
             const diameter = (parseFloat(entireRollSQ.value) || 0) + (parseFloat(tubeSQ.value) || 0);
-            totalDiameterSQ.textContent = diameter.toFixed(2) + ' inches';
-
             const multiplied = diameter * (parseFloat(ringsSQ.value) || 0);
-            multipliedResultSQ.textContent = multiplied.toFixed(4);
 
             let multiplier = 0.0872; // Default to 6' roll width
             for (const radio of rollWidthRadios) {
