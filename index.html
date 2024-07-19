@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolled Goods Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        h2 {
+            font-size: 1em;
+            font-weight: normal;
+            margin-top: 0;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .label {
+            flex: 1;
+            padding-right: 10px;
+        }
+        .input {
+            width: 100px;
+            text-align: right;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .result {
+            background-color: #e6e6e6;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .radio-group label {
+            margin-bottom: 5px;
+        }
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .toggle-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #45a049;
+        }
+        .toggle-btn.active {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Rolled Goods Calculator</h1>
+        <div class="toggle-container">
+            <button id="toggleLNFT" class="toggle-btn active">LN FT</button>
+            <button id="toggleSQYD" class="toggle-btn">SQ YD</button>
+        </div>
+        
+        <div id="lnftCalculator">
+            <h2>Inventory Worksheet - LN FT</h2>
+            
+            <div class="row">
+                <div class="label">The diameter of the entire roll</div>
+                <div class="input"><input type="number" id="entireRoll" placeholder="inches" step="0.01"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Plus the diameter of the tube</div>
+                <div class="input"><input type="number" id="tube" placeholder="inches" step="0.01"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals</div>
+                <div class="input result" id="totalDiameter">inches</div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Multiplied by the number of rings</div>
+                <div class="input"><input type="number" id="rings" placeholder="# Rings"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals</div>
+                <div class="input result" id="multipliedResult"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Multiplied times .0872</div>
+                <div class="input">.0872</div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals Total</div>
+                <div class="input result" id="total"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Divide Total by .665</div>
+                <div class="input">.665</div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals Linear Feet</div>
+                <div class="input result" id="linearFeet"># Linear Feet</div>
+            </div>
+        </div>
+
+        <div id="sqydCalculator" class="hidden">
+            <h2>Inventory Worksheet - SQ YD</h2>
+            
+            <div class="row">
+                <div class="label">The diameter of the entire roll</div>
+                <div class="input"><input type="number" id="entireRollSQ" placeholder="inches" step="0.01"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Plus the diameter of the tube</div>
+                <div class="input"><input type="number" id="tubeSQ" placeholder="inches" step="0.01"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals</div>
+                <div class="input result" id="totalDiameterSQ">inches</div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Multiplied by the number of rings</div>
+                <div class="input"><input type="number" id="ringsSQ" placeholder="# Rings"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals</div>
+                <div class="input result" id="multipliedResultSQ"></div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Roll Width</div>
+                <div class="input">
+                    <div class="radio-group">
+                        <label><input type="radio" name="rollWidth" value="0.0872" checked> 6'</label>
+                        <label><input type="radio" name="rollWidth" value="0.1454"> 10'</label>
+                        <label><input type="radio" name="rollWidth" value="0.1744"> 12'</label>
+                        <label><input type="radio" name="rollWidth" value="0.2182"> 15'</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="label">Equals</div>
+                <div class="input result" id="squareYards">Sq. Yds.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const toggleLNFT = document.getElementById('toggleLNFT');
+        const toggleSQYD = document.getElementById('toggleSQYD');
+        const lnftCalculator = document.getElementById('lnftCalculator');
+        const sqydCalculator = document.getElementById('sqydCalculator');
+
+        toggleLNFT.addEventListener('click', () => {
+            lnftCalculator.classList.remove('hidden');
+            sqydCalculator.classList.add('hidden');
+            toggleLNFT.classList.add('active');
+            toggleSQYD.classList.remove('active');
+        });
+
+        toggleSQYD.addEventListener('click', () => {
+            lnftCalculator.classList.add('hidden');
+            sqydCalculator.classList.remove('hidden');
+            toggleLNFT.classList.remove('active');
+            toggleSQYD.classList.add('active');
+        });
+
+        // LNFT Calculator
+        const entireRoll = document.getElementById('entireRoll');
+        const tube = document.getElementById('tube');
+        const rings = document.getElementById('rings');
+        const totalDiameter = document.getElementById('totalDiameter');
+        const multipliedResult = document.getElementById('multipliedResult');
+        const total = document.getElementById('total');
+        const linearFeet = document.getElementById('linearFeet');
+
+        function calculateLNFT() {
+            const diameter = (parseFloat(entireRoll.value) || 0) + (parseFloat(tube.value) || 0);
+            totalDiameter.textContent = diameter.toFixed(2) + ' inches';
+
+            const multiplied = diameter * (parseFloat(rings.value) || 0);
+            multipliedResult.textContent = multiplied.toFixed(4);
+
+            const totalValue = multiplied * 0.0872;
+            total.textContent = totalValue.toFixed(4);
+
+            const feet = totalValue / 0.665;
+            linearFeet.textContent = feet.toFixed(2) + ' Linear Feet';
+        }
+
+        entireRoll.addEventListener('input', calculateLNFT);
+        tube.addEventListener('input', calculateLNFT);
+        rings.addEventListener('input', calculateLNFT);
+
+        // SQYD Calculator
+        const entireRollSQ = document.getElementById('entireRollSQ');
+        const tubeSQ = document.getElementById('tubeSQ');
+        const ringsSQ = document.getElementById('ringsSQ');
+        const totalDiameterSQ = document.getElementById('totalDiameterSQ');
+        const multipliedResultSQ = document.getElementById('multipliedResultSQ');
+        const squareYards = document.getElementById('squareYards');
+        const rollWidthRadios = document.getElementsByName('rollWidth');
+
+        function calculateSQYD() {
+            const diameter = (parseFloat(entireRollSQ.value) || 0) + (parseFloat(tubeSQ.value) || 0);
+            totalDiameterSQ.textContent = diameter.toFixed(2) + ' inches';
+
+            const multiplied = diameter * (parseFloat(ringsSQ.value) || 0);
+            multipliedResultSQ.textContent = multiplied.toFixed(4);
+
+            let multiplier = 0.0872; // Default to 6' roll width
+            for (const radio of rollWidthRadios) {
+                if (radio.checked) {
+                    multiplier = parseFloat(radio.value);
+                    break;
+                }
+            }
+
+            const sqYards = multiplied * multiplier;
+            squareYards.textContent = sqYards.toFixed(2) + ' Sq. Yds.';
+        }
+
+        entireRollSQ.addEventListener('input', calculateSQYD);
+        tubeSQ.addEventListener('input', calculateSQYD);
+        ringsSQ.addEventListener('input', calculateSQYD);
+        for (const radio of rollWidthRadios) {
+            radio.addEventListener('change', calculateSQYD);
+        }
+    </script>
+</body>
+</html>
